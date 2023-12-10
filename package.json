@@ -1,0 +1,14 @@
+{
+  "name": "myrecipe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Akinwale Habib",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
