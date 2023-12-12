@@ -9,7 +9,7 @@ describe('validateJWT', () => {
   beforeEach(() => {
     jest.restoreAllMocks()
   })
-  
+
   test('given valid authorization token, calls next callback function', () => {
     jest.spyOn(jwt, 'verify').mockReturnValue({
       id: '6551322fa235a3190c6fa8bd'
@@ -39,6 +39,30 @@ describe('validateJWT', () => {
 
     expect(mockNext).toHaveBeenCalled()
     expect(mockRequest.user).toEqual(dbUser._id.toString())
+  })
+  
+  test('given jwt verify method throws an error, returns 400', () => {
+    jest.spyOn(jwt, 'verify').mockImplementation(() => {
+      throw new Error('error')
+    })
+    let token = 'demo_token_to_be_verified_by_a_stub'
+    const mockRequest = {
+      headers: {
+        authorization: `Bearer ${token}`
+      }
+    }
+    const mockResponse = {
+      status: jest.fn().mockReturnValue({
+        json: jest.fn()
+      })
+    }
+    const mockNext = jest.fn()
+
+    validateJWT(mockRequest, mockResponse, mockNext)
+
+    expect(mockNext).not.toHaveBeenCalled()
+    expect(mockResponse.status).toHaveBeenCalled()
+    expect(mockResponse.status).toHaveBeenCalledWith(400)
   })
 
   test('given valid authorization token, calls next callback function', () => {
