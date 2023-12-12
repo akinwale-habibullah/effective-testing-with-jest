@@ -15,10 +15,10 @@ const config = {
   // cacheDirectory: "/private/var/folders/gw/8frnngtj3c18_cmbdj5t3bsm0000gn/T/jest_dx",
 
   // Automatically clear mock calls, instances, contexts and results before every test
-  clearMocks: true,
+  // clearMocks: true,
 
   // Indicates whether the coverage information should be collected while executing the test
-  collectCoverage: true,
+  // collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   // collectCoverageFrom: undefined,
@@ -119,7 +119,7 @@ const config = {
   // resolver: undefined,
 
   // Automatically restore mock state and implementation before every test
-  restoreMocks: true,
+  // restoreMocks: true,
 
   // The root directory that Jest should scan for tests and modules within
   // rootDir: undefined,
