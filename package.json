@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/app.js",
   "scripts": {
-    "start": "node src/app.2.js",
+    "start": "NODE_ENV=dev node src/app.2.js",
     "test": "jest"
   },
   "author": "Akinwale Habib",

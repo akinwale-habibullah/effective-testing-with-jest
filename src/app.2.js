@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const {
   authRouter,
   recipeRouter
- } = require('./routes');
+ } = require('./routes/index.1');
 
 
 const NODE_ENV = process.env.NODE_ENV
