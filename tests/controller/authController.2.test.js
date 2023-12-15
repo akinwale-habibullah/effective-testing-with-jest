@@ -1,10 +1,10 @@
 const ObjectId = require('mongoose').Types.ObjectId
 const { signup } = require('../../src/controllers/auth')
 const User = require('../../src/models/user')
-const { userWithEmailExists } = require('../../src/services/8.userService')
+const { userWithEmailExists } = require('../../src/services/userService.1')
 
-jest.mock('../../src/services/8.userService', () => {
-  const originalUserService = jest.requireActual('../../src/services/8.userService')
+jest.mock('../../src/services/userService.1', () => {
+  const originalUserService = jest.requireActual('../../src/services/userService.1')
   const partiallyMockedUserService = {
     userWithEmailExists: jest.fn().mockResolvedValue(true)
   }

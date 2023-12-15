@@ -5,7 +5,7 @@ const {
   userWithEmailExists,
   findByEmail,
   isPasswordCorrect
-} = require('../services/userService.9')
+} = require('../services/userService.2')
 const Logger = require('../utils/logger')
 
 const signup = async (req, res) => {

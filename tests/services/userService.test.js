@@ -1,7 +1,7 @@
 const ObjectId = require('mongoose').Types.ObjectId
 const bcrypt = require('bcrypt')
 const mockingoose = require('mockingoose')
-const { isPasswordCorrect, hashPassword, createUser } = require('../../src/services/7.userService')
+const { isPasswordCorrect, hashPassword, createUser } = require('../../src/services/userService')
 const User = require('../../src/models/user')
 
 describe('userService', () => {
