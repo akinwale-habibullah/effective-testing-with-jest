@@ -15,6 +15,18 @@ const createRequestInterceptors = (nock, recipeList, nutritionList) => {
   }
 }
 
+const createRequestInterceptorsWithSlowNetwork = (nock, recipeList, nutritionList) => {
+  const random = Math.random() >= 0.5;
+
+  for (let index = 0; index < recipeList.length; index++) {
+    nock( 'https://recipe-by-api-ninjas.p.rapidapi.com/v1' )
+      .get(/nutrition.*/)
+      .query(true)
+      .delayConnection(random ? 6000 : 0)   // you need to set test Timeout considering Jest tests have timeout of 5000 ms
+      .reply( 200, nutritionList[index] );
+  }
+}
+
 const mergeLists = () => {
   return pastaRecipeList.map((recipe, index) => {
     recipe.nutrition = nutritionList[index]
@@ -79,7 +91,7 @@ describe('app routes - 8', () => {
       .expect(200)
   })
 
-  test.skip('login route, given incorrect login credentials json, returns 400', async () => {
+  test('login route, given incorrect login credentials json, returns 400', async () => {
     // Arrange
     const email = 'user@test.org'
     const password = 'password'
@@ -96,7 +108,7 @@ describe('app routes - 8', () => {
       })
   })
 
-  test.skip('signup route, given user in request body, return status 201', async () => {
+  test('signup route, given user in request body, return status 201', async () => {
     // Arrange
     const user = {
       firstName: 'First',
@@ -114,7 +126,7 @@ describe('app routes - 8', () => {
       .expect(201)
   })
 
-  test.skip('signup route, given user in request body, creates user in database', async () => {
+  test('signup route, given user in request body, creates user in database', async () => {
     // Arrange
     const user = {
       firstName: 'First',
@@ -135,7 +147,7 @@ describe('app routes - 8', () => {
     expect(usersInDB[0].email).toEqual('user@test.org')
   })
 
-  test.skip('signup route, given an existing user with the same email, returns 400', async () => {
+  test('signup route, given an existing user with the same email, returns 400', async () => {
     // Arrange
     const user = {
       firstName: 'First',
@@ -157,7 +169,7 @@ describe('app routes - 8', () => {
       })
   })
 
-  test.skip('recipe route, given ingredient, returns 200', async () => {
+  test('recipe route, given ingredient, returns 200', async () => {
     // Arrange
     const searchQuery = 'pasta'
     nock('https://recipe-by-api-ninjas.p.rapidapi.com/v1')
@@ -173,7 +185,7 @@ describe('app routes - 8', () => {
       .expect(200)
   })
 
-  test.skip('recipe route, given ingredient, returns list of recipes that contain object with nested nutrition data', async () => {
+  test('recipe route, given ingredient, returns list of recipes that contain object with nested nutrition data', async () => {
     // Arrange
     const searchQuery = 'pasta'
     nock('https://recipe-by-api-ninjas.p.rapidapi.com/v1')
@@ -193,7 +205,7 @@ describe('app routes - 8', () => {
     expect(randomItem.nutrition).toBeDefined()
   })
 
-  test.skip('recipe route, given ingredient, returns merged list of recipe and nutrition objects', async () => {
+  test('recipe route, given ingredient, returns merged list of recipe and nutrition objects', async () => {
     // Arrange
     const searchQuery = 'pasta'
     const mergedList = mergeLists()
@@ -212,7 +224,7 @@ describe('app routes - 8', () => {
     expect(response.body).toEqual(mergedList)
   })
 
-  test.skip('recipe route, given ingredient, returns merged list of recipe and nutrition objects', async () => {
+  test('recipe route, given ingredient, returns merged list of recipe and nutrition objects', async () => {
     // Arrange
     const searchQuery = 'pasta'
     const mergedList = mergeLists()
@@ -230,4 +242,23 @@ describe('app routes - 8', () => {
 
     expect(response.body).toEqual(mergedList)
   })
+
+  test('getRecipe, given an ingredient and a slow network, returns response containing recipes and nutrition', async () => {
+    // Arrange
+    const searchQuery = 'pasta'
+    const mergedList = mergeLists();
+    nock('https://recipe-by-api-ninjas.p.rapidapi.com/v1')
+      .get(/recipe.*/)
+      .query(true)
+      .reply( 200, pastaRecipeList )
+    createRequestInterceptorsWithSlowNetwork(nock, pastaRecipeList, nutritionList)
+
+    // Act and Assert
+    const response = await request(server)
+      .get(`/api/v1/recipes/${searchQuery}`)
+      .set('Accept', 'application/json')
+      .expect(200)
+
+    expect(response.body).toEqual(mergedList)
+  }, 10000)
 })
