@@ -16,8 +16,8 @@ describe('getRecipesByIngredient', () => {
   })
 
   afterAll(() => {
-    nock.restore()
     nock.cleanAll()
+    nock.restore()
   })
 
   test('given an ingredient, returns response', async () => {
