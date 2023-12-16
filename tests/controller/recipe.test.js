@@ -25,7 +25,8 @@ describe('getRecipesByIngredient', () => {
     const mockRequest = {
       params: {
         ingredient: 'pasta'
-      }
+      },
+      json: jest.fn()
     }
     const mockResponse = {
       status: jest.fn().mockReturnValue({

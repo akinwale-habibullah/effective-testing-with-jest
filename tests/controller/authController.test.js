@@ -63,13 +63,16 @@ describe('authController', () => {
         __v: 0
       }
       const mockRequest = { body: userObject }
+      const mockJson = jest.fn()
       const mockResponse = {
-        status: jest.fn().mockReturnValue({
-          json: jest.fn()
-        })
+        status: jest.fn().mockImplementation(() => {
+          return {
+            json: mockJson
+          }
+        }),
+        json: jest.fn()
       }
       mockingoose(User).toReturn(dbUser, 'findOne');
-      
 
       // Act
       await signup(mockRequest, mockResponse)
@@ -78,8 +81,8 @@ describe('authController', () => {
       expect(mockResponse.status).toHaveBeenCalled()
       expect(mockResponse.status).toHaveBeenCalledWith(400)
 
-      expect(mockResponse.status().json).toHaveBeenCalled()
-      expect(mockResponse.status().json).toHaveBeenCalledWith({
+      expect(mockJson).toHaveBeenCalled()
+      expect(mockJson).toHaveBeenCalledWith({
         status: 'fail',
         message: 'Email taken.'
       })

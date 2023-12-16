@@ -1,6 +1,7 @@
 const axios = require('axios')
-const { getRecipesByIngredient } = require('../../src/services/recipe')
+const { getRecipesByIngredient, getRecipeNutrition } = require('../../src/services/recipe')
 const pastaRecipeList = require('../fixtures/pastaRecipeList')
+const recipeNutritionList = require('../fixtures/nutritionList')
 
 jest.mock('axios')
 
@@ -19,9 +20,20 @@ describe('getRecipesByIngredient', () => {
     const recipes = await getRecipesByIngredient(ingredient)
 
     expect(axios.request).toHaveBeenCalled()
-    // same as
     expect(axios.request).toHaveBeenCalledTimes(1)
     expect(recipes).toEqual(pastaRecipeList)
   })
 
+  test('getRecipeNutrition, given a recipe name, returns a list of nutrition data', async () => {
+    const recipe = 'Emerald Pea Pasta'
+    const recipeNutrition = recipeNutritionList[0]
+    axios.request.mockResolvedValue({
+      data: recipeNutrition
+    })
+
+    const recipes = await getRecipeNutrition(recipe)
+
+    expect(axios.request).toHaveBeenCalledTimes(1)
+    expect(recipes).toEqual(recipeNutrition)
+  })
 })

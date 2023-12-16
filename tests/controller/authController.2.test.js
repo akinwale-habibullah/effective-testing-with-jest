@@ -11,7 +11,7 @@ jest.mock('../../src/services/userService.1', () => {
   return { ...originalUserService, ...partiallyMockedUserService }
 })
 
-describe('authController', () => {
+describe('authController2', () => {
   describe('signup using Jest.mock', () => {
     afterAll(() => {
       jest.clearAllMocks()
@@ -25,24 +25,15 @@ describe('authController', () => {
         email: 'testuser@demo.com',
         password: 'password',
       }
-      const dbUser = {
-        email: 'testuser@demo.com',
-        password: '$2b$10$IWaPIV2k1c/Cn53UsVNnFOd0CWedQmEeF.B.XFeUGIfL7OpJVZuXG',
-        firstName: 'First',
-        middleName: 'middle',
-        lastName: 'Last',
-        gender: 'U',
-        _id: new ObjectId('6551322fa235a3190c6fa8bd'),
-        created_at: '2023-11-12T20:14:39.783Z',
-        updated_at: '2023-11-12T20:14:39.783Z',
-        __v: 0
-      }
   
       const mockRequest = { body: userObject }
       const mockResponse = {
-        status: jest.fn().mockReturnValue({
-          json: jest.fn()
-        })
+        status: jest.fn().mockImplementation(() => {
+          return {
+            json: jest.fn()
+          }
+        }),
+        json: jest.fn()
       }
       await signup(mockRequest, mockResponse)
   
