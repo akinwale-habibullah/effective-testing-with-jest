@@ -8,8 +8,8 @@ describe('signup route', () => {
   })
 
   afterAll(async () => {
-    await connection.close()
     await server.close()
+    await connection.close()
   })
 
   test('given user in request body, return status 201', async () => {

@@ -10,8 +10,8 @@ describe('login route', () => {
   })
 
   afterAll(async () => {
-    await connection.close()
     await server.close()
+    await connection.close()
   })
 
   test('given valid login credentials json, returns 200', async () => {

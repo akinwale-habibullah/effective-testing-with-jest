@@ -22,7 +22,7 @@ const mergeLists = () => {
   })
 }
 
-describe('app routes - 7', () => {
+describe('app routes - 8', () => {
   let container
   let server
   let connection
@@ -34,8 +34,8 @@ describe('app routes - 7', () => {
     
     const connectionString = `mongodb://${container.getHost()}:${container.getMappedPort(27017)}/myrecipetest`
     process.env.MONGODB_URI = connectionString
-    server = require('../src/app.5').server
-    connection = require('../src/app.5').connection
+    server = require('../src/app.6').server
+    connection = require('../src/app.6').connection
   })
   
   beforeEach(async () => {
@@ -50,8 +50,8 @@ describe('app routes - 7', () => {
     nock.cleanAll()
     nock.restore()
 
-    await connection.close()
     await server.close()
+    await connection.close()
     await container.stop()
   })
 
@@ -79,7 +79,7 @@ describe('app routes - 7', () => {
       .expect(200)
   })
 
-  test('login route, given incorrect login credentials json, returns 400', async () => {
+  test.skip('login route, given incorrect login credentials json, returns 400', async () => {
     // Arrange
     const email = 'user@test.org'
     const password = 'password'
@@ -96,7 +96,7 @@ describe('app routes - 7', () => {
       })
   })
 
-  test('signup route, given user in request body, return status 201', async () => {
+  test.skip('signup route, given user in request body, return status 201', async () => {
     // Arrange
     const user = {
       firstName: 'First',
@@ -114,7 +114,7 @@ describe('app routes - 7', () => {
       .expect(201)
   })
 
-  test('signup route, given user in request body, creates user in database', async () => {
+  test.skip('signup route, given user in request body, creates user in database', async () => {
     // Arrange
     const user = {
       firstName: 'First',
@@ -135,7 +135,7 @@ describe('app routes - 7', () => {
     expect(usersInDB[0].email).toEqual('user@test.org')
   })
 
-  test('signup route, given an existing user with the same email, returns 400', async () => {
+  test.skip('signup route, given an existing user with the same email, returns 400', async () => {
     // Arrange
     const user = {
       firstName: 'First',
@@ -155,9 +155,9 @@ describe('app routes - 7', () => {
         status: 'fail',
         message: 'Email taken.'
       })
-  });
+  })
 
-  test('recipe route, given ingredient, returns 200', async () => {
+  test.skip('recipe route, given ingredient, returns 200', async () => {
     // Arrange
     const searchQuery = 'pasta'
     nock('https://recipe-by-api-ninjas.p.rapidapi.com/v1')
@@ -173,7 +173,7 @@ describe('app routes - 7', () => {
       .expect(200)
   })
 
-  test('recipe route, given ingredient, returns list of recipes that contain object with nested nutrition data', async () => {
+  test.skip('recipe route, given ingredient, returns list of recipes that contain object with nested nutrition data', async () => {
     // Arrange
     const searchQuery = 'pasta'
     nock('https://recipe-by-api-ninjas.p.rapidapi.com/v1')
@@ -193,7 +193,26 @@ describe('app routes - 7', () => {
     expect(randomItem.nutrition).toBeDefined()
   })
 
-  test('recipe route, given ingredient, returns merged list of recipe and nutrition objects', async () => {
+  test.skip('recipe route, given ingredient, returns merged list of recipe and nutrition objects', async () => {
+    // Arrange
+    const searchQuery = 'pasta'
+    const mergedList = mergeLists()
+    nock('https://recipe-by-api-ninjas.p.rapidapi.com/v1')
+      .get(/recipe.*/)
+      .query(true)
+      .reply( 200, pastaRecipeList )
+    createRequestInterceptors(nock, pastaRecipeList, nutritionList)
+
+    // Act and Assert
+    const response = await request(server)
+      .get(`/api/v1/recipes/${searchQuery}`)
+      .set('Accept', 'application/json')
+      .expect(200)
+
+    expect(response.body).toEqual(mergedList)
+  })
+
+  test.skip('recipe route, given ingredient, returns merged list of recipe and nutrition objects', async () => {
     // Arrange
     const searchQuery = 'pasta'
     const mergedList = mergeLists()

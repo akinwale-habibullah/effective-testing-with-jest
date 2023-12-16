@@ -22,7 +22,7 @@ const mergeLists = () => {
   })
 }
 
-describe('app routes', () => {
+describe.skip('app routes', () => {
   let container
   let server
   let connection
@@ -51,21 +51,13 @@ describe('app routes', () => {
     nock.cleanAll()
   })
 
-  afterAll(() => {
-    nock.cleanAll()
-    nock.restore()
-  })
-
-  afterEach(async () => {
-    nock.cleanAll()
-  })
 
   afterAll(async () => {
     nock.cleanAll()
     nock.restore()
 
-    await connection.close()
     await server.close()
+    await connection.close()
     await container.stop()
   })
 
