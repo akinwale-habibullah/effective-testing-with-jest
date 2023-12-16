@@ -1,5 +1,5 @@
 const axios = require('axios')
-const { getRecipesByIngredient, getRecipeNutrition } = require('../../src/services/recipe')
+const { getRecipesByIngredient, getRecipeNutrition } = require('../../src/services/recipe.1')
 const pastaRecipeList = require('../fixtures/pastaRecipeList')
 const recipeNutritionList = require('../fixtures/nutritionList')
 

@@ -1,7 +1,7 @@
 const {
   getRecipesByIngredient,
   getRecipeNutrition
-} = require('../services/recipe')
+} = require('../services/recipe.1')
 
 const getRecipe = async (req, res) => {
   const ingredient = req.params.ingredient
@@ -12,7 +12,7 @@ const getRecipe = async (req, res) => {
   } catch (error) {
     return res.status(500).send(error.message)
   }
-  
+
   const requests = [];
   if (recipes.length > 0) {
     recipes.map((recipe, index) => {
@@ -25,9 +25,9 @@ const getRecipe = async (req, res) => {
     await Promise.all(requests).then(() => {
       return res.json(recipes)
     })
+  } else {
+    return res.json(recipes)
   }
-
-  return res.json(recipes)
 }
 
 module.exports = {
