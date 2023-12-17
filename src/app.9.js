@@ -10,7 +10,7 @@ const NODE_ENV = process.env.NODE_ENV
 if (NODE_ENV === 'dev') {
   dotenv.config({ path: 'dev.env'})
 } else if (NODE_ENV === 'test') {
-  dotenv.config({ path: 'test.env'})
+  dotenv.config({ path: 'test.1.env'})
 } else {
   dotenv.config()
 }

@@ -16,8 +16,20 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    # - name: Pull LocalStack image
+    #   run: |
+    #     docker pull localstack/localstack-pro:latest
+
     - name: Set up Docker
-      uses: crazy-max/ghaction-setup-docker@v2
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker-compose
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
