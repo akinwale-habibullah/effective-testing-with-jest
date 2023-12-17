@@ -16,15 +16,14 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Set up JDK
-      uses: actions/setup-java@v2
-      with:
-        distribution: 'temurin'
-        java-version: '17'
+    # - name: Set up JDK
+    #   uses: actions/setup-java@v2
+    #   with:
+    #     distribution: 'temurin'
+    #     java-version: '17'
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.10.0
 
-    # - name: Pull LocalStack image
-    #   run: |
-    #     docker pull localstack/localstack-pro:latest
 
     - name: Set up Docker
       run: |
@@ -38,3 +37,7 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm test
+      env:
+        MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        Rapid_API_Key: ${{ secrets.Rapid_API_Key }}
