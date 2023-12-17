@@ -36,3 +36,4 @@ jobs:
         MONGODB_URI: ${{ secrets.MONGODB_URI }}
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
         Rapid_API_Key: ${{ secrets.Rapid_API_Key }}
+        
