@@ -1,10 +1,10 @@
 const nock = require('nock')
-const User = require('../src/models/user')
+const User = require('../../src/models/user')
 const request = require('supertest')
 const bcrypt = require('bcrypt')
 const { GenericContainer } = require('testcontainers')
-const pastaRecipeList = require('./fixtures/pastaRecipeList')
-const nutritionList = require('./fixtures/nutritionList')
+const pastaRecipeList = require('../fixtures/pastaRecipeList')
+const nutritionList = require('../fixtures/nutritionList')
 
 const createRequestInterceptors = (nock, recipeList, nutritionList) => {
   for (let index = 0; index < recipeList.length; index++) {
@@ -46,8 +46,8 @@ describe.skip('app routes - 8', () => {
     
     const connectionString = `mongodb://${container.getHost()}:${container.getMappedPort(27017)}/myrecipetest`
     process.env.MONGODB_URI = connectionString
-    server = require('../src/app.8').server
-    connection = require('../src/app.8').connection
+    server = require('../../src/app.8').server
+    connection = require('../../src/app.8').connection
   })
   
   beforeEach(async () => {

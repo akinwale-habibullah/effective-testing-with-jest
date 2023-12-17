@@ -1,6 +1,6 @@
 const axios = require('axios')
-const { getRecipesByIngredient } = require('../../src/services/recipe')
-const pastaRecipeList = require('../fixtures/pastaRecipeList')
+const { getRecipesByIngredient } = require('../../../src/services/recipe')
+const pastaRecipeList = require('../../fixtures/pastaRecipeList')
 
 jest.mock('axios')
 

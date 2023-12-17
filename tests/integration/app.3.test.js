@@ -1,8 +1,8 @@
-const { server, connection } = require('../src/app.2')
-const User = require('../src/models/user')
+const { server, connection } = require('../../src/app.3')
+const User = require('../../src/models/user')
 const request = require('supertest')
 
-describe('signup route - 2', () => {
+describe('signup route - 3', () => {
   beforeAll(async () => {
     await User.deleteMany({})
   })

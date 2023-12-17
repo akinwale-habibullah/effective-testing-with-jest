@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken')
 const mockingoose = require('mockingoose')
 const ObjectId = require('mongoose').Types.ObjectId;
-const User = require('../../src/models/user')
-const { validateJWT } = require('../../src/controllers/auth')
+const User = require('../../../src/models/user')
+const { validateJWT } = require('../../../src/controllers/auth')
 
 
 describe('validateJWT', () => {

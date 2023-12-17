@@ -1,6 +1,6 @@
 const nock = require('nock')
-const { getRecipe } = require('../../src/controllers/recipe')
-const pastaRecipeList = require('../fixtures/pastaRecipeList')
+const { getRecipe } = require('../../../src/controllers/recipe')
+const pastaRecipeList = require('../../fixtures/pastaRecipeList')
 
 describe('getRecipesByIngredient', () => {
 

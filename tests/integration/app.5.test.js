@@ -1,4 +1,4 @@
-const User = require('../src/models/user')
+const User = require('../../src/models/user')
 const request = require('supertest')
 const bcrypt = require('bcrypt')
 const { GenericContainer } = require('testcontainers')
@@ -15,8 +15,8 @@ describe.skip('login route - 5', () => {
 
     const connectionString = `mongodb://${container.getHost()}:${container.getMappedPort(27017)}/myrecipetest`
     process.env.MONGODB_URI = connectionString
-    server = require('../src/app.5').server
-    connection = require('../src/app.5').connection
+    server = require('../../src/app.5').server
+    connection = require('../../src/app.5').connection
   })
 
   beforeEach(async () => {

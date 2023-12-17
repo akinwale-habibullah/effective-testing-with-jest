@@ -1,4 +1,4 @@
-const getRecipe = require('../src/app')
+const getRecipe = require('../../src/app')
 
 test('getRecipe returns a value', () => {
   const recipes = getRecipe('pasta')

@@ -1,5 +1,5 @@
-const { server, connection } = require('../src/app.4')
-const User = require('../src/models/user')
+const { server, connection } = require('../../src/app.4')
+const User = require('../../src/models/user')
 const request = require('supertest')
 const bcrypt = require('bcrypt')
 

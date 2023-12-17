@@ -1,8 +1,8 @@
 const ObjectId = require('mongoose').Types.ObjectId
 const bcrypt = require('bcrypt')
 const mockingoose = require('mockingoose')
-const { signup } = require('../../src/controllers/auth')
-const User = require('../../src/models/user')
+const { signup } = require('../../../src/controllers/auth')
+const User = require('../../../src/models/user')
 
 describe('authController', () => {
   describe('signup', () => {
