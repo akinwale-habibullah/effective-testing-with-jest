@@ -68,8 +68,8 @@ describe('app routes - 9', () => {
     
     const connectionString = `mongodb://${container.getHost()}:${container.getMappedPort(27017)}/myrecipetest`
     process.env.MONGODB_URI = connectionString
-    server = require('../src/app.7').server
-    connection = require('../src/app.7').connection
+    server = require('../src/app.9').server
+    connection = require('../src/app.9').connection
   })
   
   beforeEach(async () => {
@@ -298,9 +298,6 @@ describe('app routes - 9', () => {
       .get(`/api/v1/recipes/${searchQuery}`)
       .set('Accept', 'application/json')
       .expect(200)
-    
-    expect(true).toBe(false)
-
 
     verifyNutritionKeyExists(response.body)
   }, 10000)

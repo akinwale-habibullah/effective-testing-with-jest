@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const {
   authRouter,
   recipeRouter
- } = require('./routes/index.1');
+} = require('./routes/index.1');
 
 
 const NODE_ENV = process.env.NODE_ENV
@@ -17,7 +17,7 @@ if (NODE_ENV === 'dev') {
 }
 
 const app = express()
-let port = 3000
+let port = 3002
 if (NODE_ENV === 'test') {
   port = process.env.JEST_WORKER_ID
 }

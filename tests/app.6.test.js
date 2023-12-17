@@ -22,7 +22,7 @@ const mergeLists = () => {
   })
 }
 
-describe.skip('app routes', () => {
+describe.skip('app routes - 6', () => {
   let container
   let server
   let connection
@@ -34,8 +34,8 @@ describe.skip('app routes', () => {
     
     const connectionString = `mongodb://${container.getHost()}:${container.getMappedPort(27017)}/myrecipetest`
     process.env.MONGODB_URI = connectionString
-    server = require('../src/app.4').server
-    connection = require('../src/app.4').connection
+    server = require('../src/app.6').server
+    connection = require('../src/app.6').connection
   })
   
   beforeEach(async () => {
@@ -50,7 +50,6 @@ describe.skip('app routes', () => {
   afterEach(() => {
     nock.cleanAll()
   })
-
 
   afterAll(async () => {
     nock.cleanAll()

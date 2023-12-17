@@ -46,8 +46,8 @@ describe.skip('app routes - 8', () => {
     
     const connectionString = `mongodb://${container.getHost()}:${container.getMappedPort(27017)}/myrecipetest`
     process.env.MONGODB_URI = connectionString
-    server = require('../src/app.6').server
-    connection = require('../src/app.6').connection
+    server = require('../src/app.8').server
+    connection = require('../src/app.8').connection
   })
   
   beforeEach(async () => {

@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const {
   authRouter,
   recipeRouter
-} = require('./routes/index.4')
+} = require('./routes/index.2')
 
 const NODE_ENV = process.env.NODE_ENV
 if (NODE_ENV === 'dev') {
@@ -16,14 +16,11 @@ if (NODE_ENV === 'dev') {
 }
 
 const app = express()
-let port = process.env.PORT || 3000
+let port = process.env.PORT || 3006
 if (NODE_ENV === 'test') {
   port = process.env.JEST_WORKER_ID
 }
 let MONGODB_URI = process.env.MONGODB_URI
-if (NODE_ENV === 'test') {
-  MONGODB_URI = MONGODB_URI + process.env.TEST_MONGODB_URI
-}
 mongoose.connect(MONGODB_URI, { minPoolSize: 5, maxPoolSize: 10 })
 const connection = mongoose.connection;
 
