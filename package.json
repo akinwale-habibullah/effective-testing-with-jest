@@ -5,7 +5,8 @@
   "main": "src/app.js",
   "scripts": {
     "start": "NODE_ENV=dev node src/app.2.js",
-    "test": "jest"
+    "test": "jest",
+    "prepare": "husky install"
   },
   "author": "Akinwale Habib",
   "license": "ISC",
@@ -26,6 +27,8 @@
     "mongoose": "^8.0.3"
   },
   "husky": {
-    "pre-commit": "npm run test"
+    "hooks": {
+      "pre-commit": "npm run test"
+    }
   }
 }
