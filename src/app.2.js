@@ -17,10 +17,7 @@ if (NODE_ENV === 'dev') {
 }
 
 const app = express()
-let port = 3002
-if (NODE_ENV === 'test') {
-  port = process.env.JEST_WORKER_ID
-}
+let port = process.env.PORT || 3002
 let MONGODB_URI = process.env.MONGODB_URI
 if (NODE_ENV === 'test') {
   MONGODB_URI = `${process.env.MONGODB_URI}${process.env.JEST_WORKER_ID}`

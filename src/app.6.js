@@ -17,9 +17,6 @@ if (NODE_ENV === 'dev') {
 
 const app = express()
 let port = process.env.PORT || 3006
-if (NODE_ENV === 'test') {
-  port = process.env.JEST_WORKER_ID
-}
 let MONGODB_URI = process.env.MONGODB_URI
 mongoose.connect(MONGODB_URI, { minPoolSize: 5, maxPoolSize: 10 })
 const connection = mongoose.connection;
