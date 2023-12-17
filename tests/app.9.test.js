@@ -27,6 +27,28 @@ const createRequestInterceptorsWithSlowNetwork = (nock, recipeList, nutritionLis
   }
 }
 
+const createRequestInterceptorsWithSomeFailedRequest = (nock, recipeList, nutritionList) => {
+  for (let index = 0; index < recipeList.length; index++) {
+    if (index <= recipeList.length / 2) {
+      nock( 'https://recipe-by-api-ninjas.p.rapidapi.com/v1' )
+        .get(/nutrition.*/)
+        .query(true)
+        .reply( 200, nutritionList[index])
+    } else {
+      nock( 'https://recipe-by-api-ninjas.p.rapidapi.com/v1' )
+        .get(/nutrition.*/)
+        .query(true)
+        .replyWithError('something awful happened')
+    }
+  }
+}
+
+const verifyNutritionKeyExists = (recipeList) => {
+  recipeList.forEach(recipe => {
+    expect(recipe.nutrition).toBeDefined()
+  })
+}
+
 const mergeLists = () => {
   return pastaRecipeList.map((recipe, index) => {
     recipe.nutrition = nutritionList[index]
@@ -34,7 +56,7 @@ const mergeLists = () => {
   })
 }
 
-describe.skip('app routes - 8', () => {
+describe('app routes - 9', () => {
   let container
   let server
   let connection
@@ -46,8 +68,8 @@ describe.skip('app routes - 8', () => {
     
     const connectionString = `mongodb://${container.getHost()}:${container.getMappedPort(27017)}/myrecipetest`
     process.env.MONGODB_URI = connectionString
-    server = require('../src/app.6').server
-    connection = require('../src/app.6').connection
+    server = require('../src/app.7').server
+    connection = require('../src/app.7').connection
   })
   
   beforeEach(async () => {
@@ -243,7 +265,7 @@ describe.skip('app routes - 8', () => {
     expect(response.body).toEqual(mergedList)
   })
 
-  test('getRecipe, given an ingredient and a slow network, returns response containing recipes and nutrition', async () => {
+  test('recipe route, given ingredient and a slow network, returns response containing recipes and nutrition', async () => {
     // Arrange
     const searchQuery = 'pasta'
     const mergedList = mergeLists();
@@ -260,5 +282,23 @@ describe.skip('app routes - 8', () => {
       .expect(200)
 
     expect(response.body).toEqual(mergedList)
+  }, 10000)
+
+  test('recipe route, given ingredient and some failed HTTP enrichment requests, returns response containing recipes and empty nutrition array for failed requests', async () => {
+    // Arrange
+    const searchQuery = 'pasta'
+    nock('https://recipe-by-api-ninjas.p.rapidapi.com/v1')
+      .get(/recipe.*/)
+      .query(true)
+      .reply( 200, pastaRecipeList )
+    createRequestInterceptorsWithSomeFailedRequest(nock, pastaRecipeList, nutritionList)
+
+    // Act and Assert
+    const response = await request(server)
+      .get(`/api/v1/recipes/${searchQuery}`)
+      .set('Accept', 'application/json')
+      .expect(200)
+
+    verifyNutritionKeyExists(response.body)
   }, 10000)
 })

@@ -22,7 +22,7 @@ const mergeLists = () => {
   })
 }
 
-describe('app routes - 7', () => {
+describe.skip('app routes - 7', () => {
   let container
   let server
   let connection
