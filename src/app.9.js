@@ -16,7 +16,7 @@ if (NODE_ENV === 'dev') {
 }
 
 const app = express()
-let port = process.env.PORT || 3009
+let port = 3009
 if (NODE_ENV === 'test') {
   port = process.env.JEST_WORKER_ID
 }
