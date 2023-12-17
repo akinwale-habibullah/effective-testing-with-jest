@@ -298,6 +298,8 @@ describe('app routes - 9', () => {
       .get(`/api/v1/recipes/${searchQuery}`)
       .set('Accept', 'application/json')
       .expect(200)
+    
+    expect(true).toBe(false)
 
     verifyNutritionKeyExists(response.body)
   }, 10000)
