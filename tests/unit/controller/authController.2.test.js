@@ -10,8 +10,8 @@ jest.mock('../../../src/services/userService.1', () => {
   }
   return { ...originalUserService, ...partiallyMockedUserService }
 })
-
-describe('authController - 2', () => {
+ 
+describe.skip('authController - 2', () => {
   describe('signup using Jest.mock', () => {
     afterAll(() => {
       jest.clearAllMocks()

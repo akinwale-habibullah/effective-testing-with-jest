@@ -1,5 +1,4 @@
 const ObjectId = require('mongoose').Types.ObjectId
-const bcrypt = require('bcrypt')
 const mockingoose = require('mockingoose')
 const { signup } = require('../../../src/controllers/auth')
 const User = require('../../../src/models/user')
@@ -7,6 +6,7 @@ const User = require('../../../src/models/user')
 describe('authController', () => {
   describe('signup', () => {
     test('given user object, returns response with 201 status', async () => {
+      // Arrange
       const userObject = {
         firstName: 'First',
         middleName: 'middle',
@@ -28,15 +28,17 @@ describe('authController', () => {
       }
       mockingoose(User).toReturn(undefined, 'findOne');
       mockingoose(User).toReturn(dbUser, 'save');
-  
       const mockRequest = { body: userObject }
       const mockResponse = {
         status: jest.fn().mockReturnValue({
           json: jest.fn()
         })
       }
+
+      // Act
       await signup(mockRequest, mockResponse)
   
+      // Assert
       expect(mockResponse.status).toHaveBeenCalled()
       expect(mockResponse.status).toHaveBeenCalledWith(201)
     })

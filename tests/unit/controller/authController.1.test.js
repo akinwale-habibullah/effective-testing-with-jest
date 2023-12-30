@@ -49,7 +49,7 @@ const createMocksWithJsonResponse = (userObject) => {
   return [mockRequest, mockResponse, mockJson]
 }
 
-describe('authController - 1', () => {
+describe.skip('authController - 1', () => {
   describe('signup', () => {
 
     test('given user object, returns response with 201 status', async () => {
