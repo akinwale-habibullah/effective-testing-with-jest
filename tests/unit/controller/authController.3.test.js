@@ -48,10 +48,9 @@ describe('authController - 3', () => {
     
     test('given invalid authorization token, returns 400', () => {
       // Arrange
-      jest.spyOn(jwt, 'verify').mockRejectedValue(new Error('error'))
-      // .mockImplementation(() => {
-      //   throw new Error('error')
-      // })
+      jest.spyOn(jwt, 'verify').mockImplementation(() => {
+        throw new Error('error')
+      })
       let token = 'demo_token_to_be_verified_by_a_stub'
       const mockRequest = {
         headers: {
