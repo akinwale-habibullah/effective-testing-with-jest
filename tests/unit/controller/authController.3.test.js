@@ -5,7 +5,7 @@ const User = require('../../../src/models/user')
 const { validateJWT } = require('../../../src/controllers/auth')
 
 
-describe.skip('authController - 3', () => {
+describe('authController - 3', () => {
 
   describe('validateJWT', () => {
     beforeEach(() => {
@@ -13,6 +13,7 @@ describe.skip('authController - 3', () => {
     })
   
     test('given valid authorization token, calls next callback function', () => {
+      // Arrange
       jest.spyOn(jwt, 'verify').mockReturnValue({
         id: '6551322fa235a3190c6fa8bd'
       })
@@ -37,16 +38,20 @@ describe.skip('authController - 3', () => {
       const mockResponse = {}
       const mockNext = jest.fn().mockImplementation(() => {})
   
+      // Act
       validateJWT(mockRequest, mockResponse, mockNext)
   
+      // Assert
       expect(mockNext).toHaveBeenCalled()
       expect(mockRequest.user).toEqual(dbUser._id.toString())
     })
     
-    test('given jwt verify method, returns 400', () => {
-      jest.spyOn(jwt, 'verify').mockImplementation(() => {
-        throw new Error('error')
-      })
+    test('given invalid authorization token, returns 400', () => {
+      // Arrange
+      jest.spyOn(jwt, 'verify').mockRejectedValue(new Error('error'))
+      // .mockImplementation(() => {
+      //   throw new Error('error')
+      // })
       let token = 'demo_token_to_be_verified_by_a_stub'
       const mockRequest = {
         headers: {
@@ -62,8 +67,10 @@ describe.skip('authController - 3', () => {
       }
       const mockNext = jest.fn()
   
+      // Act
       validateJWT(mockRequest, mockResponse, mockNext)
   
+      // Assert
       expect(mockNext).not.toHaveBeenCalled()
       expect(mockResponse.status).toHaveBeenCalled()
       expect(mockResponse.status).toHaveBeenCalledWith(400)
